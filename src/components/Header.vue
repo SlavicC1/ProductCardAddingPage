@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="page-name">Добавление товара</div>
-    <select class="sort-option">
+    <select class="sort-option" v-model="store.sortType">
       <option value="default">По умолчанию</option>
       <option value="cost-up">По цене min</option>
       <option value="cost-down">По цене max</option>
@@ -11,10 +11,14 @@
 </template>
 
 <script>
+import store from '@/store.js';
+
 export default {
   name: 'PageHeader',
-  props: {
-    msg: String
+  computed: {
+    store() {
+      return store;
+    }
   }
 }
 </script>

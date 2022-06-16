@@ -1,41 +1,80 @@
 <template>
-<form>
+<form @submit="submit" @change="needValidate">
   <label>
   Наименование товара
     <input 
+      @invalid="(e) => {e.preventDefault()}"
+      v-model="formData.name"
       type="text" 
       placeholder="Введите наименование товара"
       required>
+      <div class="needed">Поле является обязательным</div>
   </label>
   <label>
   Описание товара
     <textarea 
-      required
+      v-model="formData.description"
       placeholder="Введите описание товара"></textarea>
   </label>
   <label>
   Ссылка на изображение товара
     <input 
-      type="text" 
+      @invalid="(e) => {e.preventDefault()}"
+      v-model="formData.imgUrl"
+      type="url" 
       placeholder="Введите ссылку"
       required>
+    <div class="needed">Поле является обязательным</div>
   </label>
   <label>
   Цена товара
     <input 
+      @invalid="(e) => {e.preventDefault()}"
+      @input="costMasking"
+      v-model="formData.cost"
       type="text" 
       placeholder="Введите цену"
       required>
+    <div class="needed">Поле является обязательным</div>
   </label>
-    <button type="submit">Добавить товар</button>
+  <button type="submit" @click="isValid">Добавить товар</button>
 </form>
 </template>
 
 <script>
+import store from '@/store.js';
+
 export default {
   name: 'CardAddingForm',
-  props: {
-    msg: String
+  data() {
+    return {
+      formData: store.newProduct,
+      };
+  },
+  methods: {
+    submit(e) {
+      e.preventDefault();
+      store.products.push(Object.assign({}, store.newProduct));
+      store.save();
+    },
+    costMasking() {
+      let numericCost = "";
+      for(let i=0; i < store.newProduct.cost.length; i++) {
+        if(/\d/.test(store.newProduct.cost[i])) numericCost += store.newProduct.cost[i];
+      }
+      let maskedCost = numericCost[0];
+      for(let i=1; i < numericCost.length; i++) {
+        if((numericCost.length - i - 1) % 3 === 2) maskedCost += ' ';
+        maskedCost += numericCost[i];
+      }
+      store.newProduct.cost = maskedCost;
+    },
+    needValidate(e) {
+      e.target.className="submitted";
+    },
+    isValid(e) {
+      e.target.parentElement.className = "submitted";
+    }
   }
 }
 </script>
@@ -57,6 +96,7 @@ form {
 label {
   display: block;
   text-align: left;
+  position: relative;
   width: 100%;
   font-size: 10px;
   line-height: 13px;
@@ -70,8 +110,9 @@ input, textarea {
   border-radius: 4px;
   border: none;
   outline: none;
-  padding: 10px 16px;
-  padding-bottom: 11px;
+  padding: 9px 15px;
+  padding-bottom: 10px;
+  border: 1px solid #FFFEFB;
   font-size: 12px;
   line-height: 15px;
   margin-top: 4px;
@@ -98,6 +139,34 @@ button {
   border: none;
   margin-top: 24px;
   color: #B4B4B4;
+}
+
+form:valid > button {
+  background: #7BAE73;
+  color: #FFFFFF;
+}
+
+.submitted input:invalid,
+input.submitted:invalid {
+  border: 1px solid #FF8484;
+}
+
+.needed {
+  display: none;
+}
+
+.submitted input:invalid + .needed,
+input.submitted:invalid + .needed {
+  display: block;
+  content: "not valid";
+  position: absolute;
+  bottom: -14px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 8px;
+  line-height: 10px;
+  letter-spacing: -0.02em;
+  color: #FF8484;
 }
 
 </style>
