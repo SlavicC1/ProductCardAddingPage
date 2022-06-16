@@ -79,7 +79,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
@@ -158,7 +158,6 @@ input.submitted:invalid {
 .submitted input:invalid + .needed,
 input.submitted:invalid + .needed {
   display: block;
-  content: "not valid";
   position: absolute;
   bottom: -14px;
   font-style: normal;

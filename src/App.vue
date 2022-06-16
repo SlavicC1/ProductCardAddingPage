@@ -23,11 +23,14 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 @font-face {
     font-family: 'Source Sans Pro';
     src: url('@/assets/fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf') format('truetype');
 }
+
+$primary-background-color: #E5E5E5;
+$primary-text-color: #2c3e50;
 
 * {
   margin: 0;
@@ -35,12 +38,12 @@ export default {
 }
 
 body {
-  background: #E5E5E5;
+  background: $primary-background-color;
 }
 
 #app {
   font-family: 'Source Sans Pro';
-  color: #2c3e50;
+  color: $primary-text-color;
   padding: 32px;
   background: #E5E5E5;
   display: flex;
