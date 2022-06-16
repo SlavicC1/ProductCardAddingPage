@@ -1,28 +1,32 @@
 <template>
   <div class="container">
-    <ProductCard />
-    <ProductCard />
-    <ProductCard />
-    <ProductCard />
-    <ProductCard />
-    <ProductCard />
+    <ProductCard v-for="(item, key) in cardsData"
+      v-bind:key="key"
+      :name="item.name"
+      :description="item.description"
+      :cost="item.cost"
+      :imgUrl="item.imgUrl" />
     <!-- Чтобы карточки имели одинаковый размер -->
-    <div class="fake-card"></div>
-    <div class="fake-card"></div>
-    <div class="fake-card"></div>
-    <div class="fake-card"></div>
+    <ProductCard :fake="true" />
+    <ProductCard :fake="true" />
+    <ProductCard :fake="true" />
   </div>
 </template>
 
 <script>
 import ProductCard from '@/components/ProductCard.vue';
-//import store from '@/store.js';
+import store from '@/store.js';
 
 export default {
   name: 'ProductGrid',
   components: {
     ProductCard,
   },
+  computed: {
+    cardsData() {
+      return store.products;
+    }
+  }
 }
 </script>
 
@@ -34,14 +38,6 @@ export default {
   justify-content: space-between;
   margin: -8px;
   flex-shrink: shrink;
-}
-
-.fake-card {
-  flex: 1;
-  height: 0;
-  min-width: 300px;
-  max-width: 500px;
-  margin: 8px;
 }
 
 </style>

@@ -1,17 +1,19 @@
+import {reactive} from 'vue';
+
 const productExample = {
-    name: '',
-    description: '',
-    imageLink: '',
-    cost: 0,
+    name: 'Наименование товара',
+    description: 'Довольно-таки интересное описание товара в несколько строк. Довольно-таки интересное описание товара в несколько строк',
+    imgUrl: require('@/assets/images/productImage.png'),
+    cost: '10 000',
 };
 
-export default {
+const store = reactive({
     sortType: '',
     newProduct: {
         name: '',
         description: '',
-        imageLink: '',
-        cost: 0,
+        imgUrl: '',
+        cost: '',
     },
     products: [
         productExample,
@@ -20,5 +22,8 @@ export default {
         productExample,
         productExample,
         productExample,
+        productExample,
     ],
-};
+});
+
+export default store;

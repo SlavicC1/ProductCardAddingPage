@@ -1,13 +1,10 @@
 <template>
-<div class="card">
-  <img src="@/assets/images/productImage.png">
+<div :class="fake ? 'card fake-card' : 'card'">
+  <img :src="imgUrl">
   <div class="description">
-    <h3>Наименование товара</h3>
-    <p>
-      Довольно-таки интересное описание товара в несколько строк. 
-      Довольно-таки интересное описание товара в несколько строк
-    </p>
-    <h2>10000 руб.</h2>
+    <h3>{{name}}</h3>
+    <p>{{description}}</p>
+    <h2>{{cost}} руб.</h2>
     <div class="delete">
       <img src="@/assets/images/delete.png">
     </div>
@@ -19,7 +16,11 @@
 export default {
   name: 'ProductCard',
   props: {
-    msg: String
+    imgUrl: String,
+    name: String,
+    description: String,
+    cost: String,
+    fake: Boolean,
   }
 }
 </script>
@@ -100,6 +101,14 @@ export default {
   font-weight: 600;
   font-size: 24px;
   line-height: 30px;
+}
+
+.fake-card {
+  height: 0;
+}
+
+.fake-card * {
+  display: none;
 }
 
 </style>
