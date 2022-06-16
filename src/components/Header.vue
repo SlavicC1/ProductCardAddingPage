@@ -1,12 +1,14 @@
 <template>
   <header>
     <div class="page-name">Добавление товара</div>
-    <select class="sort-option" v-model="store.sortType">
-      <option value="default">По умолчанию</option>
-      <option value="cost-up">По цене min</option>
-      <option value="cost-down">По цене max</option>
-      <option value="name">По наименованию</option>
-    </select>
+    <div class="sort-option">
+      <select v-model="store.sortType">
+        <option value="default">По умолчанию</option>
+        <option value="cost-up">По цене min</option>
+        <option value="cost-down">По цене max</option>
+        <option value="name">По наименованию</option>
+      </select>
+    </div>
   </header>
 </template>
 
@@ -41,7 +43,7 @@ header {
   height: 35px;
 }
 
-.sort-option {
+.sort-option select {
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
@@ -54,15 +56,25 @@ header {
   border-radius: 4px;
   border: none;
   outline: none;
+  appearance: none;
   color: #B4B4B4;
+  width: 150px;
 }
 
-select::after {
-  display: none;
+.sort-option {
+  position: relative;
 }
 
-select::before {
-  display: none;
+.sort-option:after {
+  content: '';
+  display: block;
+  background-image: url('@/assets/images/arrow.png');
+  background-size: cover;
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  bottom: 12px;
+  right: 15px;
 }
 
 </style>

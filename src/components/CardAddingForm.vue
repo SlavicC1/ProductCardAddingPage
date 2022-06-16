@@ -158,7 +158,6 @@ input.submitted:invalid {
 .submitted input:invalid + .needed,
 input.submitted:invalid + .needed {
   display: block;
-  content: "not valid";
   position: absolute;
   bottom: -14px;
   font-style: normal;
