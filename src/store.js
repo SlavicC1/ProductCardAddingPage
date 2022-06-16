@@ -8,7 +8,7 @@ const productExample = {
 };
 
 const store = reactive({
-    sortType: '',
+    sortType: 'default',
     newProduct: {
         name: '',
         description: '',
@@ -16,14 +16,29 @@ const store = reactive({
         cost: '',
     },
     products: [
-        productExample,
-        productExample,
-        productExample,
-        productExample,
-        productExample,
-        productExample,
-        productExample,
+        Object.assign({},productExample),
+        Object.assign({},productExample),
+        Object.assign({},productExample),
+        Object.assign({},productExample),
+        Object.assign({},productExample),
+        Object.assign({},productExample),
+        Object.assign({},productExample),
     ],
+    save: (() => {
+        localStorage.setItem('products', JSON.stringify(store.products));
+    }).bind(this),
+    load: (() => {}).bind(this)
 });
+
+store.save = () => {
+    localStorage.setItem('products', JSON.stringify(store.products));
+};
+
+store.load = () => {
+    if(localStorage.getItem('products'))
+        store.products = JSON.parse(localStorage.getItem('products'));
+};
+
+store.load();
 
 export default store;

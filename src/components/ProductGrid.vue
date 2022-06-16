@@ -1,11 +1,12 @@
 <template>
   <div class="container">
-    <ProductCard v-for="(item, key) in cardsData"
-      v-bind:key="key"
+    <ProductCard v-for="item in cardsData"
+      v-bind:key="item"
       :name="item.name"
       :description="item.description"
       :cost="item.cost"
-      :imgUrl="item.imgUrl" />
+      :imgUrl="item.imgUrl" 
+      :deleteCard="deleteCard(item.id)"/>
     <!-- Чтобы карточки имели одинаковый размер -->
     <ProductCard :fake="true" />
     <ProductCard :fake="true" />
@@ -24,8 +25,29 @@ export default {
   },
   computed: {
     cardsData() {
-      return store.products;
+      let data = store.products.slice().map((el, i) => {
+        return Object.assign(el, {id: i});
+      });
+
+      if(store.sortType === 'default') return data;
+      return data.sort((a, b) => {
+        if(store.sortType === 'name') return a.name > b.name;
+        if(store.sortType === 'cost-up') 
+          return parseInt(a.cost.replace(/\s/g, '')) > parseInt(b.cost.replace(/\s/g, ''));
+        if(store.sortType === 'cost-down') 
+          return parseInt(a.cost.replace(/\s/g, '')) < parseInt(b.cost.replace(/\s/g, ''));
+      });
     }
+  },
+  methods: {
+    deleteCard(i) {
+      console.log(i);
+      return function() {
+        store.products.splice( i, 1);
+        console.log(i);
+        store.save();
+      };
+    },
   }
 }
 </script>

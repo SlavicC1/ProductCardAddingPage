@@ -54,7 +54,8 @@ export default {
   methods: {
     submit(e) {
       e.preventDefault();
-      store.products.push(Object.assign({},store.newProduct));
+      store.products.push(Object.assign({}, store.newProduct));
+      store.save();
     },
     costMasking() {
       let numericCost = "";

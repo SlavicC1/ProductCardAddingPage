@@ -1,11 +1,11 @@
 <template>
-<div :class="fake ? 'card fake-card' : 'card'">
+<div :class="(fake ? 'card fake-card' : 'card') + deletionCN">
   <img :src="imgUrl">
   <div class="description">
     <h3>{{name}}</h3>
     <p>{{description}}</p>
     <h2>{{cost}} руб.</h2>
-    <div class="delete">
+    <div class="delete" @click="deleteCardAnimated">
       <img src="@/assets/images/delete.png">
     </div>
   </div>
@@ -21,6 +21,18 @@ export default {
     description: String,
     cost: String,
     fake: Boolean,
+    deleteCard: Function,
+  },
+  data() {
+    return {
+      deletionCN: ''
+    }
+  },
+  methods: {
+    deleteCardAnimated() {
+      this.deletionCN = ' deletionCN';
+      setTimeout(this.deleteCard, 500);
+    }
   }
 }
 </script>
@@ -101,6 +113,13 @@ export default {
   font-weight: 600;
   font-size: 24px;
   line-height: 30px;
+}
+
+.deletionCN,
+.deletionCN:hover {
+  transition: all 0.5s;
+  transform: scale(0.7);
+  opacity: 0;
 }
 
 .fake-card {
